@@ -1,0 +1,22 @@
+# Public web service. The site, API and websocket share one origin.
+# Free instances use an ephemeral disk: SQLite lasts until the service restarts.
+services:
+  - type: web
+    name: royal-chess
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 22.14.0
+      - key: HOST
+        value: 0.0.0.0
+      - key: APP_URL
+        sync: false
+      - key: APP_URL_ALIASES
+        sync: false
